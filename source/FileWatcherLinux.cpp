@@ -22,7 +22,7 @@
     James Wynn james@jameswynn.com
 */
 
-#include <FileWatcher/FileWatcherLinux.h>
+#include <filesentry/FileWatcherLinux.h>
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_LINUX
 
