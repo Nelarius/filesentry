@@ -37,7 +37,7 @@
 #include <string.h>
 
 
-namespace FW
+namespace fs
 {
     
 #define MAX_CHANGE_EVENT_SIZE 2000
@@ -414,6 +414,6 @@ namespace FW
     {
     }
 
-};//namespace FW
+};//namespace fs
 
 #endif//FILEWATCHER_PLATFORM_KQUEUE

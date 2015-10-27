@@ -35,7 +35,7 @@
 #include <map>
 #include <sys/types.h>
 
-namespace FW
+namespace fs
 {
     /// Implementation for Linux based on inotify.
     /// @class FileWatcherLinux
@@ -84,7 +84,7 @@ namespace FW
 
     };//end FileWatcherLinux
 
-};//namespace FW
+};//namespace fs
 
 #endif//FILEWATCHER_PLATFORM_LINUX
 

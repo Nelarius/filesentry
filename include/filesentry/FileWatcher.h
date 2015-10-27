@@ -32,8 +32,9 @@
 
 #include <string>
 #include <stdexcept>
+#include <functional>
 
-namespace FW
+namespace fs
 {
     /// Type for a string
     typedef std::string String;

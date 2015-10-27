@@ -36,7 +36,7 @@
 #pragma warning (disable: 4996)
 #endif
 
-namespace FW
+namespace fs
 {
     /// Internal watch data
     struct WatchStruct
@@ -265,6 +265,6 @@ namespace FW
         watch->mFileWatchListener->handleFileAction(watch->mWatchid, watch->mDirName, filename, fwAction);
     }
 
-};//namespace FW
+};//namespace fs
 
 #endif//_WIN32

@@ -34,7 +34,7 @@
 #	define FILEWATCHER_IMPL FileWatcherLinux
 #endif
 
-namespace FW
+namespace fs
 {
 
     //--------
@@ -80,4 +80,4 @@ namespace FW
         mImpl->update();
     }
 
-};//namespace FW
+};//namespace fs
