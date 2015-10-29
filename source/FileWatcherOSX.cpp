@@ -362,15 +362,6 @@ namespace fs
     //--------
     WatchID FileWatcherOSX::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
     {
-/*		int fd = open(directory.c_str(), O_RDONLY);
-        if(fd == -1)
-            perror("open");
-                
-        EV_SET(&change, fd, EVFILT_VNODE,
-            EV_ADD | EV_ENABLE | EV_ONESHOT,
-            NOTE_DELETE | NOTE_EXTEND | NOTE_WRITE | NOTE_ATTRIB,
-            0, (void*)"testing");
-*/
         
         WatchStruct* watch = new WatchStruct(++mLastWatchID, directory, watcher);
         mWatches.insert(std::make_pair(mLastWatchID, watch));

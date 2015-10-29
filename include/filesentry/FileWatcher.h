@@ -43,7 +43,6 @@ namespace fs
 
     // forward declarations
     class FileWatcherImpl;
-    class FileWatchListener;
 
     /// Base exception class
     /// @class Exception
@@ -103,11 +102,11 @@ namespace fs
         /// Add a directory watch. Same as the other addWatch, but doesn't have recursive option.
         /// For backwards compatibility.
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
-        WatchID addWatch(const String& directory, FileWatchListener* watcher);
+        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> handler);
 
         /// Add a directory watch
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
-        WatchID addWatch(const String& directory, FileWatchListener* watcher, bool recursive);
+        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> handler, bool recursive);
 
         /// Remove a directory watch. This is a brute force search O(nlogn).
         void removeWatch(const String& directory);
@@ -123,25 +122,6 @@ namespace fs
         FileWatcherImpl* mImpl;
 
     };//end FileWatcher
-
-
-    /// Basic interface for listening for file events.
-    /// @class FileWatchListener
-    class FileWatchListener
-    {
-    public:
-        FileWatchListener() {}
-        virtual ~FileWatchListener() {}
-
-        /// Handles the action file action
-        /// @param watchid The watch id for the directory
-        /// @param dir The directory
-        /// @param filename The filename that was accessed (not full path)
-        /// @param action Action that was performed
-        virtual void handleFileAction(WatchID watchid, const String& dir, const String& filename, Action action) = 0;
-
-    };//class FileWatchListener
-
-};//namespace FW
+};//namespace fs
 
 #endif//_FW_FILEWATCHER_H_

@@ -56,7 +56,10 @@ namespace fs
 
         /// Add a directory watch
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
-        WatchID addWatch(const String& directory, FileWatchListener* watcher, bool recursive);
+        WatchID addWatch(
+            const String& directory, 
+            std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, 
+            bool recursive);
 
         /// Remove a directory watch. This is a brute force lazy search O(nlogn).
         void removeWatch(const String& directory);

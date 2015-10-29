@@ -48,7 +48,11 @@ namespace fs
         DWORD mNotifyFilter;
         bool mStopNow;
         FileWatcherImpl* mFileWatcher;
-        FileWatchListener* mFileWatchListener;
+        std::function<void(
+            WatchID watchid, 
+            const String& dir, 
+            const String& filename, 
+            Action action)> mFileWatchListener;
         char* mDirName;
         WatchID mWatchid;
         bool mIsRecursive;
@@ -186,7 +190,7 @@ namespace fs
     }
 
     //--------
-    WatchID FileWatcherWin32::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
+    WatchID FileWatcherWin32::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, bool recursive)
     {
         WatchID watchid = ++mLastWatchID;
 
@@ -262,7 +266,7 @@ namespace fs
             break;
         };
 
-        watch->mFileWatchListener->handleFileAction(watch->mWatchid, watch->mDirName, filename, fwAction);
+        watch->mFileWatchListener.operator()(watch->mWatchid, watch->mDirName, filename, fwAction);
     }
 
 };//namespace fs

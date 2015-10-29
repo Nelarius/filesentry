@@ -24,13 +24,13 @@
 #include <filesentry/FileWatcherImpl.h>
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_WIN32
-#	include <FileWatcher/FileWatcherWin32.h>
+#	include <filesentry/FileWatcherWin32.h>
 #	define FILEWATCHER_IMPL FileWatcherWin32
 #elif FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_KQUEUE
-#	include <FileWatcher/FileWatcherOSX.h>
+#	include <filesentry/FileWatcherOSX.h>
 #	define FILEWATCHER_IMPL FileWatcherOSX
 #elif FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_LINUX
-#	include <FileWatcher/FileWatcherLinux.h>
+#	include <filesentry/FileWatcherLinux.h>
 #	define FILEWATCHER_IMPL FileWatcherLinux
 #endif
 
@@ -51,13 +51,13 @@ namespace fs
     }
 
     //--------
-    WatchID FileWatcher::addWatch(const String& directory, FileWatchListener* watcher)
+    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher)
     {
         return mImpl->addWatch(directory, watcher, false);
     }
 
     //--------
-    WatchID FileWatcher::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
+    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, bool recursive)
     {
         return mImpl->addWatch(directory, watcher, recursive);
     }

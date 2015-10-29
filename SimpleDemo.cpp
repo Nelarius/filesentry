@@ -26,36 +26,27 @@
 	THE SOFTWARE.
 */
 
-#include <FileWatcher/FileWatcher.h>
+#include <filesentry/FileWatcher.h>
 #include <iostream>
 
-/// Processes a file action
-class UpdateListener : public FW::FileWatchListener
-{
-public:
-	UpdateListener() {}
-	void handleFileAction(FW::WatchID watchid, const FW::String& dir, const FW::String& filename,
-		FW::Action action)
-	{
-		std::cout << "DIR (" << dir + ") FILE (" + filename + ") has event " << action << std::endl;
-	}
-};
-
-
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	try 
 	{
 		// create the file watcher object
-		FW::FileWatcher fileWatcher;
+		fs::FileWatcher fileWatcher;
 
 		// add a watch to the system
-		FW::WatchID watchID = fileWatcher.addWatch("./test", new UpdateListener(), true);
-		
+        fs::WatchID watchID = fileWatcher.addWatch( "test", [](
+            fs::WatchID watchID, const std::string& dir, const std::string filename, fs::Action action
+        ) -> void {
+            std::cout << "DIR ( " << dir << " ) FILE ( " << filename << " ) has event " << action << std::endl;
+        } );
+        
 		std::cout << "Press ^C to exit demo" << std::endl;
 
 		// loop until a key is pressed
-		while(1)
+		while( true )
 		{
 			fileWatcher.update();
 		}
