@@ -1,5 +1,4 @@
-cd ..
-test# filesentry
+# filesentry
 
 A small and modern C++ wrapper for OS file monitoring systems. Currently it uses Win32 `ReadDirectoryChangesW` for monitoring changes in Windows and `inotify` in Linux. OSX is supported via `kqueue`s and directory scans.
 
