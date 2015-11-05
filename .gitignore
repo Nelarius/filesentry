@@ -1,0 +1,18 @@
+# Compiled object files
+*.o
+*.d
+*.lo
+*.slo
+
+# Compiled dynamic libraries
+*.so
+*.dll
+*.dylib
+
+# Compiled executables
+*.exe
+*.app
+*.out
+
+# Project files
+bin/
