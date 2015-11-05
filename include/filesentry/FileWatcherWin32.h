@@ -81,7 +81,7 @@ namespace fs
 
     };//end FileWatcherWin32
 
-};//namespace fs
+} //namespace fs
 
 #endif//FILEWATCHER_PLATFORM_WIN32
 

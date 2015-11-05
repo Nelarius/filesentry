@@ -166,7 +166,7 @@ namespace fs
         }
 
         HeapFree(GetProcessHeap(), 0, pWatch);
-        return NULL;
+        return nullptr;
     }
 
 #pragma endregion
@@ -269,6 +269,6 @@ namespace fs
         watch->mFileWatchListener.operator()(watch->mWatchid, watch->mDirName, filename, fwAction);
     }
 
-};//namespace fs
+} //namespace fs
 
 #endif//_WIN32

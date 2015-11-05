@@ -180,6 +180,6 @@ namespace fs
         }
     }
 
-};//namespace fs
+} //namespace fs
 
 #endif//FILEWATCHER_PLATFORM_LINUX

@@ -77,6 +77,6 @@ namespace fs
         virtual void handleAction(WatchStruct* watch, const String& filename, unsigned long action) = 0;
 
     };//end FileWatcherImpl
-};//namespace fs
+} //namespace fs
 
 #endif//_FW_FILEWATCHERIMPL_H_

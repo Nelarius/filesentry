@@ -82,7 +82,7 @@ namespace fs
 
     };//end FileWatcherOSX
 
-};//namespace fs
+} //namespace fs
 
 #endif//__APPLE_CC__
 

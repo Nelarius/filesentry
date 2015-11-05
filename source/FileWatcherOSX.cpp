@@ -169,7 +169,7 @@ namespace fs
             EntryStruct* entry = 0;
             struct stat attrib;			
             
-            while((dentry = readdir(dir)) != NULL)
+            while((dentry = readdir(dir)) != nullptr)
             {
                 String fname = mDirName + "/" + dentry->d_name;
                 stat(fname.c_str(), &attrib);
@@ -240,7 +240,7 @@ namespace fs
             
             struct dirent* entry;
             struct stat attrib;
-            while((entry = readdir(dir)) != NULL)
+            while((entry = readdir(dir)) != nullptr)
             {
                 String fname = (mDirName + "/" + String(entry->d_name));
                 stat(fname.c_str(), &attrib);
@@ -256,7 +256,7 @@ namespace fs
         
         void removeAll()
         {
-            KEvent* ke = NULL;
+            KEvent* ke = nullptr;
             
             // go through list removing each file and sending an event
             for(int i = 0; i < mChangeListCount; ++i)
@@ -405,6 +405,6 @@ namespace fs
     {
     }
 
-};//namespace fs
+} //namespace fs
 
 #endif//FILEWATCHER_PLATFORM_KQUEUE

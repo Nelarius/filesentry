@@ -84,7 +84,7 @@ namespace fs
 
     };//end FileWatcherLinux
 
-};//namespace fs
+} //namespace fs
 
 #endif//FILEWATCHER_PLATFORM_LINUX
 

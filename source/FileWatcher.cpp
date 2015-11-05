@@ -80,4 +80,4 @@ namespace fs
         mImpl->update();
     }
 
-};//namespace fs
+} //namespace fs
