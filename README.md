@@ -2,7 +2,7 @@
 
 A small and modern C++ wrapper for OS file monitoring systems. Currently it uses Win32 `ReadDirectoryChangesW` for monitoring changes in Windows and `inotify` in Linux. OSX is supported via `kqueue`s and directory scans.
 
-`filesentry` is a modern C++ wrapper for the `SimpleFileWatcher` library originally by James Wynn.
+`filesentry` is a modern C++ wrapper for the `SimpleFileWatcher` library originally built by James Wynn.
 
 ## Getting started
 
@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
 		// create the file watcher object
 		fs::FileWatcher fileWatcher;
 
-		// add a watch to the system
+		// add a directory watch to the system
+        // this scans the `test/` directory for any changes 
         fs::WatchID watchID = fileWatcher.addWatch("test", [](
             fs::WatchID watchID, const std::string& dir, const std::string filename, fs::Action action
         ) -> void {

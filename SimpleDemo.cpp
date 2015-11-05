@@ -36,7 +36,8 @@ int main(int argc, char** argv)
 		// create the file watcher object
 		fs::FileWatcher fileWatcher;
 
-		// add a watch to the system
+		// add a directory watch to the system
+        // this scans the `test/` directory for any changes
         fs::WatchID watchID = fileWatcher.addWatch( "test", [](
             fs::WatchID watchID, const std::string& dir, const std::string filename, fs::Action action
         ) -> void {
