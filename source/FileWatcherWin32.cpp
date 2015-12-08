@@ -24,7 +24,7 @@
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_WIN32
 
-#define _WIN32_WINNT 0x0550
+//#define _WIN32_WINNT 0x0550
 #include <windows.h>
 
 #if defined(_MSC_VER)
@@ -58,7 +58,7 @@ namespace fs
         bool mIsRecursive;
     };
 
-#pragma region Internal Functions
+//#pragma region Internal Functions
 
     // forward decl
     bool RefreshWatch(WatchStruct* pWatch, bool _clear = false);
@@ -169,7 +169,7 @@ namespace fs
         return nullptr;
     }
 
-#pragma endregion
+//#pragma endregion
 
     //--------
     FileWatcherWin32::FileWatcherWin32()
