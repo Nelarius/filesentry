@@ -20,14 +20,14 @@
     THE SOFTWARE.
 */
 
-#include <filesentry/FileWatcher.h>
-#include <filesentry/FileWatcherImpl.h>
+#include "filesentry/FileWatcher.h"
+#include "filesentry/FileWatcherImpl.h"
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_WIN32
 #	include <filesentry/FileWatcherWin32.h>
 #	define FILEWATCHER_IMPL FileWatcherWin32
 #elif FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_KQUEUE
-#	include <filesentry/FileWatcherOSX.h>
+#	include "filesentry/FileWatcherOSX.h"
 #	define FILEWATCHER_IMPL FileWatcherOSX
 #elif FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_LINUX
 #	include <filesentry/FileWatcherLinux.h>

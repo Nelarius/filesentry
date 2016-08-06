@@ -36,10 +36,8 @@
 
 namespace fs
 {
-    /// Type for a string
-    typedef std::string String;
-    /// Type for a watch id
-    typedef unsigned long WatchID;
+    using String = std::string;
+    using WatchID = unsigned long;
 
     // forward declarations
     class FileWatcherImpl;
@@ -84,6 +82,8 @@ namespace fs
         };
     };
     typedef Actions::Action Action;
+    
+    using EventHandler = std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)>;
 
     /// Listens to files and directories and dispatches events
     /// to notify the parent program of the changes.

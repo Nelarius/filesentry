@@ -22,7 +22,7 @@
     James Wynn james@jameswynn.com
 */
 
-#include <filesentry/FileWatcherOSX.h>
+#include "filesentry/FileWatcherOSX.h"
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_KQUEUE
 
@@ -39,14 +39,14 @@
 
 namespace fs
 {
-    
+
 #define MAX_CHANGE_EVENT_SIZE 2000
     
     typedef struct kevent KEvent;
     
     struct EntryStruct
     {
-        EntryStruct(const char* filename, FW::WatchID watchid, time_t mtime = 0)
+        EntryStruct(const char* filename, WatchID watchid, time_t mtime = 0)
         : mFilename(filename), mWatchID(watchid), mModifiedTime(mtime)
         {
         }
@@ -56,18 +56,11 @@ namespace fs
         }
         const char* mFilename;
         time_t mModifiedTime;
-        FW::WatchID mWatchID;
+        WatchID mWatchID;
     };
     
     int comparator(const void* ke1, const void* ke2)
     {
-        /*KEvent* kevent1 = (KEvent*) ke1;
-        KEvent* kevent2 = (KEvent*) ke2;
-        
-        EntryStruct* event1 = (EntryStruct*)kevent1->udata;
-        EntryStruct* event2 = (EntryStruct*)kevent2->udata;
-        return strcmp(event1->mFilename, event2->mFilename);
-        */
         return strcmp(((EntryStruct*)(((KEvent*)(ke1))->udata))->mFilename, ((EntryStruct*)(((KEvent*)(ke2))->udata))->mFilename);
     }
     
@@ -75,14 +68,14 @@ namespace fs
     {
         WatchID mWatchID;
         String mDirName;
-        FileWatchListener* mListener;
+        EventHandler mWatchListener;
         
         // index 0 is always the directory
         KEvent mChangeList[MAX_CHANGE_EVENT_SIZE];
         size_t mChangeListCount;
         
-        WatchStruct(WatchID watchid, const String& dirname, FileWatchListener* listener)
-        : mWatchID(watchid), mDirName(dirname), mListener(listener)
+        WatchStruct(WatchID watchid, const String& dirname, EventHandler handler)
+        : mWatchID(watchid), mDirName(dirname), mWatchListener(handler)
         {
             mChangeListCount = 0;
             addAll();
@@ -90,8 +83,6 @@ namespace fs
         
         void addFile(const String& name, bool imitEvents = true)
         {
-            //fprintf(stderr, "ADDED: %s\n", name.c_str());
-            
             // create entry
             struct stat attrib;
             stat(name.c_str(), &attrib);
@@ -217,9 +208,9 @@ namespace fs
             closedir(dir);
         };
         
-        void handleAction(const String& filename, FW::Action action)
+        void handleAction(const String& filename, Action action)
         {
-            mListener->handleFileAction(mWatchID, mDirName, filename, action);
+            mWatchListener(mWatchID, mDirName, filename, action);
         }
         
         void addAll()
@@ -229,9 +220,7 @@ namespace fs
             EV_SET(&mChangeList[0], fd, EVFILT_VNODE,
                 EV_ADD | EV_ENABLE | EV_ONESHOT,
                 NOTE_DELETE | NOTE_EXTEND | NOTE_WRITE | NOTE_ATTRIB,
-                0, 0);
-            
-            //fprintf(stderr, "ADDED: %s\n", mDirName.c_str());			
+                0, 0);	
             
             // scan directory and call addFile(name, false) on each file
             DIR* dir = opendir(mDirName.c_str());
@@ -323,7 +312,7 @@ namespace fs
                                 struct stat attrib;
                                 stat(entry->mFilename, &attrib);
                                 entry->mModifiedTime = attrib.st_mtime;
-                                watch->handleAction(entry->mFilename, FW::Actions::Modified);
+                                watch->handleAction(entry->mFilename, Actions::Modified);
                             }
                         }
                     }
@@ -360,7 +349,7 @@ namespace fs
     }
 
     //--------
-    WatchID FileWatcherOSX::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
+    WatchID FileWatcherOSX::addWatch(const String& directory, EventHandler watcher, bool recursive)
     {
         
         WatchStruct* watch = new WatchStruct(++mLastWatchID, directory, watcher);
