@@ -66,6 +66,8 @@ namespace fs
     /// Unpacks events and passes them to a user defined callback.
     void CALLBACK WatchCallback(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, LPOVERLAPPED lpOverlapped)
     {
+        // TCHAR is wide char if UNICODE has been defined
+        // otherwise it's just regular char
         TCHAR szFile[MAX_PATH];
         PFILE_NOTIFY_INFORMATION pNotify;
         WatchStruct* pWatch = (WatchStruct*) lpOverlapped;
@@ -95,7 +97,7 @@ namespace fs
                 }
 #			endif
 
-                pWatch->mFileWatcher->handleAction(pWatch, szFile, pNotify->Action);
+                pWatch->mFileWatcher->handleAction(pWatch, (const char*)szFile, pNotify->Action);
 
             } while (pNotify->NextEntryOffset != 0);
         }
@@ -194,7 +196,9 @@ namespace fs
     {
         WatchID watchid = ++mLastWatchID;
 
-        WatchStruct* watch = CreateWatch(directory.c_str(), recursive,
+        // LPCTSTR is a long (regular) const pointer to TCHAR string
+        // TCHAR is a wide char if UNICODE has been defined (in which case std::wstring can be used as fs::String)
+        WatchStruct* watch = CreateWatch((LPCTSTR)directory.c_str(), recursive,
             FILE_NOTIFY_CHANGE_CREATION | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_FILE_NAME);
 
         if(!watch)
